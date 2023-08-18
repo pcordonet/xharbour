@@ -29,11 +29,4 @@ jobs:
         run: |
           mkdir artifact
           mkdir artifact\Samples
-          xcopy harbour\contrib\mod_harbour.v2\Samples\*.* .\artifact\Samples /E /H /C /I
-          xcopy harbour\contrib\mod_harbour.v2\output\win64\mod_harbour.v2.so .\artifact /E /H /C /I
-
-      - name: Upload mod_harbour.v2.so/libmhapache.dll/Samples to artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: mod_harbour.v2_win64
-          path: artifact
+          dir xharbour\bin
