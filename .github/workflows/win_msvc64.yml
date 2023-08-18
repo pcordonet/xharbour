@@ -1,0 +1,46 @@
+name: xharbour for Windows 64 
+
+on:
+  push:
+    paths: 
+      - '.github/workflows/win_msvc64.yml'
+
+jobs:
+  build:
+    runs-on: windows-2019
+    
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Checkout xharbour repo
+        uses: actions/checkout@v2
+        with:
+          repository: pcordonet/xharbour
+          path: xharbour
+  
+      - name: Updating Harbour hbssl for new OpenSSL 
+        run: |
+          (Get-Content -path xharbour\contrib\hbssl\hbssl.hbp) -replace 'libeay32','libcrypto-1_1-x64' | Set-Content -path xharbour\contrib\hbssl\hbssl.hbp
+          (Get-Content -path xharbour\contrib\hbssl\hbssl.hbp) -replace 'ssleay32','libssl-1_1-x64' | Set-Content -path xharbour\contrib\hbssl\hbssl.hbp
+          (Get-Content -path xharbour\contrib\hbssl\hbssl.hbc) -replace 'libeay32','libcrypto-1_1-x64' | Set-Content -path xharbour\contrib\hbssl\hbssl.hbc
+          (Get-Content -path xharbour\contrib\hbssl\hbssl.hbc) -replace 'ssleay32','libssl-1_1-x64' | Set-Content -path xharbour\contrib\hbssl\hbssl.hbc
+         
+      - name: Build mod_harbour.v2
+        working-directory: xharbour
+        shell: cmd
+        run: |
+          call make_vc.bat
+
+      - name: Prepare artifact
+        shell: cmd
+        run: |
+          mkdir artifact
+          mkdir artifact\Samples
+          xcopy harbour\contrib\mod_harbour.v2\Samples\*.* .\artifact\Samples /E /H /C /I
+          xcopy harbour\contrib\mod_harbour.v2\output\win64\mod_harbour.v2.so .\artifact /E /H /C /I
+
+      - name: Upload mod_harbour.v2.so/libmhapache.dll/Samples to artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: mod_harbour.v2_win64
+          path: artifact
