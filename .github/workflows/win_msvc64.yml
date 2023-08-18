@@ -17,15 +17,8 @@ jobs:
         with:
           repository: pcordonet/xharbour
           path: xharbour
-  
-      - name: Updating Harbour hbssl for new OpenSSL 
-        run: |
-          (Get-Content -path xharbour\contrib\hbssl\hbssl.hbp) -replace 'libeay32','libcrypto-1_1-x64' | Set-Content -path xharbour\contrib\hbssl\hbssl.hbp
-          (Get-Content -path xharbour\contrib\hbssl\hbssl.hbp) -replace 'ssleay32','libssl-1_1-x64' | Set-Content -path xharbour\contrib\hbssl\hbssl.hbp
-          (Get-Content -path xharbour\contrib\hbssl\hbssl.hbc) -replace 'libeay32','libcrypto-1_1-x64' | Set-Content -path xharbour\contrib\hbssl\hbssl.hbc
-          (Get-Content -path xharbour\contrib\hbssl\hbssl.hbc) -replace 'ssleay32','libssl-1_1-x64' | Set-Content -path xharbour\contrib\hbssl\hbssl.hbc
          
-      - name: Build mod_harbour.v2
+      - name: Build xharbour
         working-directory: xharbour
         shell: cmd
         run: |
