@@ -1,4 +1,4 @@
-CINI = \xHarbour.com\xHarbour-Builder\vc8\xbuild.vc8.ini
+CINI = \xharbour\xHarbourBuilder\xHarbour-Builder\vc8\xbuild.vc8.ini
 C_OUTPUTFOLDER = 
 DEFFILE = 
 INCLUDEFOLDERS = \xhb\include\w32
@@ -27,6 +27,6 @@ SLY_OUTPUTFOLDER =
 STARTIN = 
 TARGETFOLDER = \xhb\lib\vc8
 
-[\xHarbour.com\xHarbour-Builder\WinCallBack.c]
+[\xharbour\xHarbourBuilder\xHarbour-Builder\WinCallBack.c]
 MYC_FLAGS = 
 MYDEFINES = 

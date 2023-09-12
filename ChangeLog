@@ -8,6 +8,127 @@
    2002-12-01 23:12 UTC+0100 Foo Bar <foo.bar@foobar.org>
 */
 
+2023-09-11 13:05 UTC+0200 Enrico Maria Giordano <e.m.giordano@emagsoftware.it>
+  * contrib\hbzlib\zipplatform.cpp
+    ! fixed SetFileModTime() to compile with BCC 7.60 32-bit
+
+2023-08-26 21:09 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * source/rtl/hbcrc32.c
+    - Removed redundant assignment
+
+2023-08-26 17:42 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * include/hbapi.h
+    * Restored a Borland specific #define of HB_ITEM_NIL to support non conforming older Borland compiler.    
+
+2023-08-26 14:48 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * include/hbver.ch
+    * Bumped _HB_CURR_YEAR to 2023
+
+2023-08-26 14:35 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * source/pp/ppcore.c
+    * Removed wrong static qualifier of hb_pp_szWarnings
+
+2023-08-26 11:33 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * source/rtl/hbcrc32.c
+    * Corrected inline declaraion to conform with C89/CP10029
+    * Many formatting and readability corrections to conform with xHarbour code style
+
+2023-08-25 22:49 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * make_drw.sh
+    * Refining warnings
+  * include/hbapi.h
+    * Minor reduction (fix compile warning)
+  * include/simplex.c
+    * Added missing extern to pacify warning
+
+2023-08-25 22:00 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * source/rtl/at.c
+    ! Fixed wrong types in AT() and ATI() which broke support for negative arguments.
+
+2023-08-25 21:18 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * source/compiler/harbour.sly
+    * Added few static qualifiers to pacify pedantic Compiler's warnings
+  * source/pp/ppcore.c
+    * Added explicit type cast to pacify warning about signed/unsigned comparison
+    * Minor modifications to pacify const related warnings 
+
+2023-08-25 17:45 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * include/hbver.h
+    * Bumped to 1.3.0
+  * source/rtl/hbcrc32.c
+    * Fixed compile errors: bool -> BOOL, false -> FALSE, true -> TRUE
+    * Fixed compile warnings about const
+
+2023-08-25 17:20 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com> On behalf of:eduardomotta-emottasistemas    
+  * source/rtl/hbcrc32.c
+      new crc algorithms: KERMIT, MC F4XX, CCITT FFFF, MODBUS
+  + tests/test_crc32.prg
+    + Usage example
+
+  * xHarbourBuilder/xHarbour-Builder/xbldfull2.bat
+     /*
+        Possibility to compile xHarbour Builder sources non-debug when compiled for VC.
+        Just set the environment variable:
+        set VC8_DEBUG=NO
+     */
+
+2023-08-24 20:45 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * make_drw.sh
+    + Added warning and ASan support
+  * source/pp/ppcore.c
+    ! Fixed GPF trap
+  * source/vm/fm.c
+    - Removed 2 redundant ';'
+
+  * source/vm/set.c
+    + Added pSet->hb_set_phTracePathsHash support to hb_setClone()
+  * source/vm/hvm.c
+    + Added mark of HB_VM_STACK.set.hb_set_phTracePathsHash in hb_vmIsLocalRef()
+  * source/vm/thread.c
+    + Added mark of (&pStack->set)->hb_set_phTracePathsHash in hb_threadIsLocalRef()
+      /* This should fix gpf trap introduced by addition of hb_set_phTracePathsHash */
+
+2023-08-24 13:18 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * include/hbapifs.h
+  * source/rtl/filesys.c
+    + Added: void hb_fsFileToFileWithPath( char *szFile, PHB_ITEM pNameWithPath ); 
+  * source/vm/set.c
+    * Refactored to use new hb_fsFileToFileWithPath() to remove code duplication    
+  * source/common/hbdate.c
+    ! Fix by Richard Visscher to hb_timeEncode() (Thanks to EMG)
+
+2023-08-23 22:16 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
+  * doc/en/file.txt
+    * Typo in function name 
+
+  * include/hbapifs.h
+  * source/rtl/filesys.c
+    + Added hb_fsCurDrvDir() to get current drive and directory.
+
+  * include/hbset.h
+    + Added member PHB_ITEM       hb_set_phTracePathsHash; 
+
+  * source/vm/hash.c
+    * Minor reduction of code duplication.
+
+  * source/vm/set.c
+    + Added logic to HB_SET_TRACEFILE to retain original directory of tracefile 
+      when specified file name is not a full path and not EXPLICITLY relative.
+
+  * source/rtl/traceprg.prg
+    * Removed temporary hack related to retaining the original directory of tracefile.
+
+  * tests/tsttrace.prg
+    * Enhanced sample use of TraceLog(). 
+
+2023-08-20  16:00 UTC-0300  Luiz Rafael Culik <luiz@xharbour.com.br>
+   ! include/hashapi.h
+     ! force export of hb_hashLen when creating dll   
+
+2023-08-20  10:20 UTC-0300  Luiz Rafael Culik <luiz@xharbour.com.br>
+   * bin/bld_vc.bat 
+     ! added support for msvc 2022
+
 2023-08-16 09:17 UTC-0500 Ron Pinkas <ronpinkas/AT/gmail/com>
    * utils/misc/hbrc.c
      * Modified FILEVERSION to be the 4 16bit parts of HB_VER_CVSID
@@ -827,7 +948,7 @@
 
 2017-09-02 23:08 UTC+0200 Enrico Maria Giordano <e.m.giordano@emagsoftware.it>
   * contrib/hbhpdf/harupdf.c
-    ! added setting date.ind to space in function HPDF_SETINFODATEATTR (many thanks to Mario Simões Filho)
+    ! added setting date.ind to space in function HPDF_SETINFODATEATTR (many thanks to Mario Simï¿½es Filho)
 
 2017-08-27 00:33 UTC+0200 Enrico Maria Giordano <e.m.giordano@emagsoftware.it>
   * contrib/tipssl/client.prg
@@ -1934,7 +2055,7 @@
 2015-01-29 08:25 UTC+0200 Saulius Zrelskis <labitas/AT/gmail/com>
   * contrib/hbsqlit3/xhbsqlite3.c
     + add function HB_FUNC( SQLITE3_LOAD_EXTENSION )
-      addendum by César Lozada
+      addendum by Cï¿½sar Lozada
 
 2015-01-14 14:55 UTC+0200 Saulius Zrelskis <labitas/AT/gmail/com>
   * source/rtl/pcre/config.generic.h
@@ -2786,7 +2907,7 @@
 
 2014-05-19 13:55 UTC+0200 Saulius Zrelskis <labitas/AT/gmail/com>
   * source/tip/encoding/base64.c
-    ! fixed memory leak & bug reported by Mario Simões Filho
+    ! fixed memory leak & bug reported by Mario Simï¿½es Filho
 
 2014-05-10 13:50 UTC-300 Luiz Rafael Culik <luiz/AT/xharbour/com/br>
   * source/rtl/win_misc.c
@@ -10228,7 +10349,7 @@
      ! Minox Fix im compilation under linux
 
 2011-12-15 10:40 UTC-0300 Luiz Rafael Culik <luiz at xharbour.com.br>
-   * source/típ/sendmail.prg
+   * source/tï¿½p/sendmail.prg
      ! fixed Disposition-Notification-To field
 
 2011-11-27 22:40 UTC-0300 Luiz Rafael Culik <luiz at xharbour.com.br>
