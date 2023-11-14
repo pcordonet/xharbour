@@ -22,6 +22,8 @@ jobs:
         working-directory: xharbour
         shell: cmd
         run: |
+          set HB_ARCH=64
+          set HB_ARCH=64
           call make_vc.bat
 
       - name: Prepare artifact
